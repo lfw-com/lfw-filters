@@ -1,0 +1,33 @@
+{
+ "$schema": "https://schemas.wp.org/trunk/block.json",
+ "apiVersion": 3,
+ "name": "lfw-filters/filters",
+ "title": "Filters",
+ "category": "widgets",
+ "icon": "filter",
+ "description": "Filters built from a post type's public taxonomies, with an optional keyword field. Works as a plain form without JavaScript.",
+ "keywords": ["facets", "finder", "taxonomy", "search"],
+ "textdomain": "lfw-filters",
+ "attributes": {
+  "postType": { "type": "string", "default": "post" },
+  "facets": { "type": "array", "default": [], "items": { "type": "object" } },
+  "layout": { "type": "string", "enum": ["band", "panel"], "default": "band" },
+  "search": { "type": "boolean", "default": true },
+  "searchLabel": { "type": "string", "default": "Search" },
+  "searchPlaceholder": { "type": "string", "default": "" },
+  "showCounts": { "type": "boolean", "default": true },
+  "submitLabel": { "type": "string", "default": "Show results" },
+  "label": { "type": "string", "default": "Filter results" }
+ },
+ "supports": {
+  "html": false,
+  "align": ["wide", "full"],
+  "className": true,
+  "color": { "background": true, "text": true },
+  "spacing": { "padding": true, "margin": true }
+ },
+ "editorScript": "lfw-filters-editor",
+ "style": "lfw-filters",
+ "viewScript": "lfw-filters-view",
+ "render": "file:./render.php"
+}

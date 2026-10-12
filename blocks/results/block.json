@@ -1,0 +1,26 @@
+{
+ "$schema": "https://schemas.wp.org/trunk/block.json",
+ "apiVersion": 3,
+ "name": "lfw-filters/results",
+ "title": "Filter results",
+ "category": "widgets",
+ "icon": "excerpt-view",
+ "description": "Wraps a Query Loop so it follows the Filters block. Can group results by a taxonomy.",
+ "keywords": ["facets", "finder", "query"],
+ "textdomain": "lfw-filters",
+ "attributes": {
+  "groupBy": { "type": "string", "default": "" },
+  "groupHeadingLevel": { "type": "number", "default": 2 },
+  "emptyHeading": { "type": "string", "default": "No results match all of those filters" },
+  "emptyText": { "type": "string", "default": "Try removing a filter." }
+ },
+ "supports": {
+  "html": false,
+  "align": ["wide", "full"],
+  "className": true,
+  "spacing": { "padding": true, "margin": true }
+ },
+ "editorScript": "lfw-filters-editor",
+ "style": "lfw-filters",
+ "render": "file:./render.php"
+}

@@ -1,0 +1,20 @@
+{
+ "$schema": "https://schemas.wp.org/trunk/block.json",
+ "apiVersion": 3,
+ "name": "lfw-filters/count",
+ "title": "Result count",
+ "category": "widgets",
+ "icon": "editor-ol",
+ "description": "How many posts match the filters. Screen readers hear it when it changes.",
+ "keywords": ["facets", "finder", "results"],
+ "textdomain": "lfw-filters",
+ "attributes": {
+  "postType": { "type": "string", "default": "post" },
+  "singular": { "type": "string", "default": "" },
+  "plural": { "type": "string", "default": "" }
+ },
+ "supports": { "html": false, "className": true, "typography": { "fontSize": true }, "spacing": { "margin": true } },
+ "editorScript": "lfw-filters-editor",
+ "style": "lfw-filters",
+ "render": "file:./render.php"
+}

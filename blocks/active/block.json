@@ -1,0 +1,20 @@
+{
+ "$schema": "https://schemas.wp.org/trunk/block.json",
+ "apiVersion": 3,
+ "name": "lfw-filters/active",
+ "title": "Active filters",
+ "category": "widgets",
+ "icon": "dismiss",
+ "description": "Removable chips for the active filters, and Clear filters.",
+ "keywords": ["facets", "chips", "finder"],
+ "textdomain": "lfw-filters",
+ "attributes": {
+  "postType": { "type": "string", "default": "post" },
+  "label": { "type": "string", "default": "Active filters" },
+  "clearLabel": { "type": "string", "default": "Clear filters" }
+ },
+ "supports": { "html": false, "className": true, "spacing": { "margin": true } },
+ "editorScript": "lfw-filters-editor",
+ "style": "lfw-filters",
+ "render": "file:./render.php"
+}

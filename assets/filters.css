@@ -1,0 +1,164 @@
+/* LFW Filters. Themes restyle through the custom properties below (each falls
+   back to a theme.json preset, then a plain default). Text is never under
+   14px; every control, chip and summary is at least 44px tall. */
+
+.lfwf {
+  --lfwf-surface: var(--wp--preset--color--surface, #f4f1ea);
+  --lfwf-field: var(--wp--preset--color--base, #fff);
+  --lfwf-ink: var(--wp--preset--color--contrast, #1b1f23);
+  --lfwf-muted: var(--wp--preset--color--muted, #4f5660);
+  --lfwf-border: #767676;
+  --lfwf-accent: var(--wp--preset--color--accent, #0b5c73);
+  --lfwf-accent-ink: #fff;
+  --lfwf-chip-bg: var(--wp--preset--color--accent-soft, #e3eef2);
+  --lfwf-chip-ink: var(--lfwf-ink);
+  --lfwf-focus: var(--lfwf-accent);
+  --lfwf-radius: 999px;
+  --lfwf-panel-radius: 16px;
+  --lfwf-font: inherit;
+  --lfwf-gap: 12px;
+  font-family: var(--lfwf-font);
+  color: var(--lfwf-ink);
+}
+
+.lfwf *, .lfwf *::before, .lfwf *::after { box-sizing: border-box; }
+
+.lfwf-sr {
+  position: absolute !important;
+  width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.lfwf :focus-visible { outline: 3px solid var(--lfwf-focus); outline-offset: 3px; }
+
+/* ---------- Shared controls ---------- */
+.lfwf-form { margin: 0; }
+.lfwf-label, .lfwf-legend { display: block; font-weight: 700; font-size: 16px; line-height: 1.3; margin: 0 0 8px; padding: 0; }
+.lfwf-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.lfwf-input, .lfwf-select {
+  width: 100%; min-height: 52px; padding: 0 20px;
+  border: 2px solid var(--lfwf-border); border-radius: var(--lfwf-radius);
+  background: var(--lfwf-field); color: var(--lfwf-ink);
+  font: 400 17px/1.4 var(--lfwf-font);
+}
+.lfwf-select { padding-right: 40px; appearance: none; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+.lfwf-input::placeholder { color: var(--lfwf-muted); opacity: 1; }
+.lfwf-input:focus-visible, .lfwf-select:focus-visible { outline: 3px solid var(--lfwf-focus); outline-offset: 2px; }
+.lfwf-options { list-style: none; margin: 0; padding: 0; }
+.lfwf-check { display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 16px; line-height: 1.3; cursor: pointer; }
+.lfwf-check input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--lfwf-accent); }
+.lfwf-n { margin-left: auto; padding-left: 8px; color: var(--lfwf-muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.lfwf-button {
+  min-height: 52px; padding: 0 24px; border: 0; border-radius: var(--lfwf-radius);
+  background: var(--lfwf-accent); color: var(--lfwf-accent-ink);
+  font: 700 16px/1 var(--lfwf-font); cursor: pointer;
+}
+.lfwf-actions[hidden] { display: none; }
+
+/* Pill toggles: a real checkbox fills each pill. */
+.lfwf-options.is-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.lfwf-pill {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 44px; padding: 0 18px; border-radius: var(--lfwf-radius);
+  background: var(--lfwf-field); color: var(--lfwf-ink);
+  box-shadow: inset 0 0 0 1.5px var(--lfwf-border);
+  font-size: 16px; font-weight: 500; line-height: 1.2; cursor: pointer;
+}
+.lfwf-pill input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.lfwf-pill:hover { box-shadow: inset 0 0 0 2px var(--lfwf-ink); }
+.lfwf-pill:has(input:focus-visible) { outline: 3px solid var(--lfwf-focus); outline-offset: 3px; }
+.lfwf-pill:has(input:checked) { background: var(--lfwf-accent); color: var(--lfwf-accent-ink); box-shadow: none; font-weight: 600; }
+.lfwf-pill:has(input:checked)::before { content: ""; width: 6px; height: 11px; border: solid currentColor; border-width: 0 2.2px 2.2px 0; transform: rotate(45deg) translateY(-2px); }
+.lfwf-pill .lfwf-n { margin-left: 0; color: inherit; opacity: .85; }
+
+/* ---------- Band (Dunmere): search plus one menu per facet ---------- */
+.lfwf-filters.is-layout-band { background: var(--lfwf-surface); padding: 32px var(--wp--style--root--padding-right, 24px) 32px var(--wp--style--root--padding-left, 24px); }
+.is-layout-band .lfwf-inner {
+  max-width: var(--wp--style--global--wide-size, 1200px); margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 20px; align-items: center;
+}
+.is-layout-band .lfwf-search { min-width: 0; }
+.is-layout-band .lfwf-facets { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.is-layout-band .lfwf-facet-select { display: flex; align-items: center; gap: 10px; }
+.is-layout-band .lfwf-facet-select .lfwf-label { margin: 0; white-space: nowrap; }
+.is-layout-band .lfwf-facet-select .lfwf-select { width: auto; min-width: 160px; }
+.is-layout-band .lfwf-actions { grid-column: 1 / -1; }
+.lfwf-drop { position: relative; }
+.lfwf-summary {
+  list-style: none; display: inline-flex; align-items: center; gap: 8px;
+  min-height: 52px; padding: 0 20px; border-radius: var(--lfwf-radius);
+  background: var(--lfwf-field); border: 1.5px solid var(--lfwf-border);
+  font-size: 16px; font-weight: 600; cursor: pointer; white-space: nowrap; user-select: none;
+}
+.lfwf-summary::-webkit-details-marker { display: none; }
+.lfwf-summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); margin-left: 4px; }
+.lfwf-drop[open] > .lfwf-summary { border-color: var(--lfwf-accent); }
+.lfwf-drop[open] > .lfwf-summary::after { transform: translateY(2px) rotate(-135deg); }
+.lfwf-summary:hover { border-color: var(--lfwf-accent); }
+.lfwf-badge:not(:empty) { background: var(--lfwf-accent); color: var(--lfwf-accent-ink); border-radius: 999px; min-width: 24px; padding: 0 7px; font-size: 14px; font-weight: 700; line-height: 24px; text-align: center; }
+.lfwf-drop > .lfwf-fieldset {
+  position: absolute; z-index: 20; left: 0; top: calc(100% + 8px);
+  width: 320px; max-width: calc(100vw - 32px); max-height: 60vh; overflow: auto;
+  background: var(--lfwf-field); border-radius: 14px; padding: 8px 20px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .18), 0 0 0 1px rgba(0, 0, 0, .12);
+}
+.lfwf-drop:last-of-type > .lfwf-fieldset { left: auto; right: 0; }
+
+/* ---------- Panel (Calder): every facet open ---------- */
+.lfwf-filters.is-layout-panel .lfwf-panel { background: var(--lfwf-surface); border-radius: var(--lfwf-panel-radius); }
+.lfwf-panel-summary { display: none; }
+.is-layout-panel .lfwf-inner { padding: 32px; display: grid; gap: 28px; }
+.is-layout-panel .lfwf-search { max-width: 560px; }
+.is-layout-panel .lfwf-facets { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px 32px; }
+.is-layout-panel .lfwf-facets > .lfwf-facet:first-child { grid-column: 1 / -1; }
+.is-layout-panel .lfwf-legend { margin-bottom: 12px; }
+
+/* ---------- Count, chips, groups ---------- */
+.lfwf-count { font-size: 17px; font-weight: 700; margin: 0; }
+.lfwf-count:focus { outline: none; }
+.lfwf-count:focus-visible { outline: 3px solid var(--lfwf-focus); outline-offset: 3px; }
+.lfwf-active { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.lfwf-active[hidden] { display: none; }
+.lfwf-chips { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.lfwf-chip {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px 0 18px;
+  border-radius: var(--lfwf-radius); background: var(--lfwf-chip-bg); color: var(--lfwf-chip-ink);
+  font-size: 15px; font-weight: 600; line-height: 1.2; text-decoration: none;
+}
+.lfwf-chip:hover { text-decoration: underline; text-underline-offset: 3px; }
+.lfwf-x { position: relative; width: 14px; height: 14px; flex: none; }
+.lfwf-x::before, .lfwf-x::after { content: ""; position: absolute; left: 6px; top: -1px; width: 2px; height: 16px; background: currentColor; border-radius: 1px; transform: rotate(45deg); }
+.lfwf-x::after { transform: rotate(-45deg); }
+.lfwf-clear { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; color: var(--lfwf-accent); font-size: 16px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.lfwf-results[aria-busy="true"] { opacity: .6; transition: opacity .15s; }
+/* Items and groups filtered out in the browser (static copies of a page). */
+.lfwf-results .lfwf-hidden, .lfwf-results [data-lfwf-item][hidden], .lfwf-results .lfwf-group[hidden] { display: none !important; }
+.lfwf-group + .lfwf-group { margin-top: 48px; }
+.lfwf-group-heading { display: flex; align-items: baseline; gap: 12px; }
+.lfwf-group-n { font-size: 16px; font-weight: 600; color: var(--lfwf-muted); }
+.lfwf-empty { padding: 32px 0; }
+.lfwf-empty-heading { font-size: 20px; font-weight: 700; margin: 0 0 8px; }
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 781px) {
+  .is-layout-band .lfwf-inner { grid-template-columns: minmax(0, 1fr); }
+  .is-layout-band .lfwf-facets { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .lfwf-summary { display: flex; width: 100%; justify-content: space-between; border-radius: 12px; }
+  .lfwf-summary > span:first-child { margin-right: auto; }
+  .lfwf-drop > .lfwf-fieldset, .lfwf-drop:last-of-type > .lfwf-fieldset { position: static; width: auto; max-width: none; max-height: none; box-shadow: none; margin-top: 6px; }
+  .is-layout-band .lfwf-facet-select { display: block; }
+  .is-layout-band .lfwf-facet-select .lfwf-label { margin-bottom: 8px; }
+  .is-layout-band .lfwf-facet-select .lfwf-select { width: 100%; }
+  .lfwf-panel-summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    min-height: 56px; padding: 0 20px; font-weight: 700; font-size: 17px; cursor: pointer; list-style: none;
+  }
+  .lfwf-panel-summary::-webkit-details-marker { display: none; }
+  .lfwf-panel-summary::after { content: ""; width: 10px; height: 10px; border: solid currentColor; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) translateY(-3px); }
+  .lfwf-panel[open] > .lfwf-panel-summary::after { transform: rotate(-135deg) translateY(-2px); }
+  .is-layout-panel .lfwf-inner { padding: 4px 20px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lfwf-results[aria-busy="true"] { transition: none; }
+}
